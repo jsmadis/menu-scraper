@@ -1,0 +1,9 @@
+restaurants:
+- name: Pivnice u capa
+  url: https://www.pivnice-ucapa.cz/denni-menu.php
+
+- name: Suzies steak pub
+  url: http://www.suzies.cz/poledni-menu.html
+
+- name: Veroni cafe
+  url: https://www.menicka.cz/4921-veroni-coffee--chocolate.html

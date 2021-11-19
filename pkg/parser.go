@@ -23,8 +23,8 @@ type Menu struct {
 }
 
 // parse loads, parses and processes restaurants data about their daily menus
-func (rc *RestaurantConfig) parse(resultChan chan<- ScrapedRestaurant) {
-	var lunchData ScrapedRestaurant
+func (rc *RestaurantConfig) parse(resultChan chan<- *ScrapedRestaurant) {
+	var lunchData = &ScrapedRestaurant{}
 
 	response, err := http.Get(rc.Url)
 	if err != nil {

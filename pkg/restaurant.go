@@ -6,6 +6,7 @@ import (
 	"os"
 	"path/filepath"
 	"text/template"
+	"time"
 )
 
 const (
@@ -37,7 +38,7 @@ type RestaurantConfig struct {
 }
 
 type ScrapedRestaurants struct {
-	Restaurants []ScrapedRestaurant
+	Restaurants []*ScrapedRestaurant
 }
 
 // Load loads restaurants configuration
@@ -62,8 +63,8 @@ func (r *Restaurants) Load(path string) error {
 
 // Scrape scrapes menus and saves them to the ScrapeRestaurants struct
 func (r *Restaurants) Scrape() ScrapedRestaurants {
-	var resultsChan = make(chan ScrapedRestaurant, len(r.Restaurants))
-	var resultArray = make([]ScrapedRestaurant, len(r.Restaurants))
+	var resultsChan = make(chan *ScrapedRestaurant, len(r.Restaurants))
+	var resultArray = make([]*ScrapedRestaurant, len(r.Restaurants))
 
 	for _, restaurant := range r.Restaurants {
 		go restaurant.parse(resultsChan)
@@ -77,6 +78,21 @@ func (r *Restaurants) Scrape() ScrapedRestaurants {
 		}
 	}
 	return ScrapedRestaurants{Restaurants: resultArray}
+}
+
+// FilterTodayMenus dummy way how to remove menus for other days
+func (sr *ScrapedRestaurants) FilterTodayMenus() {
+	dateToday := time.Now().Format("02.01.2006")
+
+	for _, restaurant := range sr.Restaurants {
+		var menuToday []*Menu
+		for _, menu := range restaurant.DailyMenus {
+			if menu.Date == dateToday {
+				menuToday = append(menuToday, menu)
+			}
+		}
+		restaurant.DailyMenus = menuToday
+	}
 }
 
 // Print prints scrapedRestaurants in pretty format

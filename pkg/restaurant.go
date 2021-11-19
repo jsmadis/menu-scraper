@@ -5,6 +5,7 @@ import (
 	"github.com/PuerkitoBio/goquery"
 	"golang.org/x/net/html"
 	"gopkg.in/yaml.v2"
+	"log"
 	"net/http"
 	"os"
 	"path/filepath"
@@ -87,6 +88,10 @@ func (r *Restaurants) Scrape() ScrapedRestaurants {
 
 	for i, _ := range r.Restaurants {
 		resultArray[i] = <-resultsChan
+
+		if resultArray[i].Err != nil {
+			log.Print(resultArray[i].Err)
+		}
 	}
 	return ScrapedRestaurants{Restaurants: resultArray}
 }
@@ -195,6 +200,7 @@ func (m *Menu) parseLines(data []string)  {
 	}
 }
 
+// mustSplit Split based on length of line or position of line with price (kc)
 func mustSplit(start int, data []string) bool {
 	for i := start; i < len(data); i++ {
 		line := data[i]
@@ -211,7 +217,7 @@ func mustSplit(start int, data []string) bool {
 }
 
 func containsPrice(line string) bool {
-	return strings.Contains(strings.ToLower(line), "kč") || strings.Contains(line, "K�")
+	return strings.Contains(strings.ToLower(line), "kč")
 }
 
 func (sr *ScrapedRestaurants) Print() error {

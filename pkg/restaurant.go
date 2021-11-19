@@ -95,6 +95,18 @@ func (sr *ScrapedRestaurants) FilterTodayMenus() {
 	}
 }
 
+func (sr ScrapedRestaurants) Len() int {
+	return len(sr.Restaurants)
+}
+
+func (sr ScrapedRestaurants) Less(i, j int) bool {
+	return sr.Restaurants[i].RestaurantName < sr.Restaurants[j].RestaurantName
+}
+
+func (sr ScrapedRestaurants) Swap(i, j int) {
+	sr.Restaurants[i], sr.Restaurants[j] = sr.Restaurants[j], sr.Restaurants[i]
+}
+
 // Print prints scrapedRestaurants in pretty format
 func (sr *ScrapedRestaurants) Print() error {
 	restaurantTemplate, err := template.New("ScrapedRestaurants").Parse(printingTemplate)

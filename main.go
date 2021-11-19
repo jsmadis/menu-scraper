@@ -4,6 +4,7 @@ import (
 	"flag"
 	. "github.com/jsmadis/menu-scraper/pkg"
 	"log"
+	"sort"
 )
 
 const(
@@ -26,13 +27,16 @@ func main() {
 		return
 	}
 
-	result := restaurants.Scrape()
+	scrapedRestaurants := restaurants.Scrape()
 
 	if today {
-		result.FilterTodayMenus()
+		scrapedRestaurants.FilterTodayMenus()
 	}
 
-	err = result.Print()
+	//sort to get always the same order of restaurants
+	sort.Sort(scrapedRestaurants)
+
+	err = scrapedRestaurants.Print()
 
 	if err != nil {
 		log.Fatal(err)

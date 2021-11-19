@@ -108,7 +108,15 @@ func (rc *RestaurantConfig) parse(resultChan chan<- ScrapedRestaurant) {
 		return
 	}
 
-	doc, err := goquery.NewDocumentFromReader(response.Body)
+	body, err := DecodeHTMLBody(response.Body)
+
+	if err != nil {
+		lunchData.Err = err
+		resultChan <- lunchData
+		return
+	}
+
+	doc, err := goquery.NewDocumentFromReader(body)
 	if err != nil {
 		lunchData.Err = err
 		resultChan <- lunchData

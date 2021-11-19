@@ -18,4 +18,13 @@ func main() {
 		return
 	}
 
+	result := restaurants.Scrape()
+
+	err = result.Print()
+
+	if err != nil {
+		log.Fatal(err)
+		return
+	}
+
 }

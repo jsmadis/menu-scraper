@@ -22,6 +22,7 @@ type Menu struct {
 	Lines []string
 }
 
+// parse loads, parses and processes restaurants data about their daily menus
 func (rc *RestaurantConfig) parse(resultChan chan<- ScrapedRestaurant) {
 	var lunchData ScrapedRestaurant
 
@@ -66,6 +67,7 @@ func (rc *RestaurantConfig) parse(resultChan chan<- ScrapedRestaurant) {
 	resultChan <- lunchData
 }
 
+// findText finds TextNodes inside selected html snippet
 func findText(node *html.Node, out []string) []string {
 	if node == nil {
 		return out
@@ -80,16 +82,19 @@ func findText(node *html.Node, out []string) []string {
 	return findText(node.NextSibling, out)
 }
 
+// process processes scraped text and fills it to the ScrapedRestaurant struct
 func (l *ScrapedRestaurant) process() {
 	for _, dayRawData := range l.Raw {
 		menu := &Menu{}
 
 		rawData := menu.parseDate(dayRawData)
-		menu.parseLines(rawData)
+		menu.processLines(rawData)
 
 		l.DailyMenus = append(l.DailyMenus, menu)
 	}
 }
+
+// parseDate parses date and day from the data
 func (m *Menu) parseDate(rawData []string) []string {
 	dateRe := regexp.MustCompile(dateRegex)
 
@@ -107,7 +112,8 @@ func (m *Menu) parseDate(rawData []string) []string {
 	}
 }
 
-func (m *Menu) parseLines(data []string)  {
+// processLines processes lines to better format so each meal is for 1 line
+func (m *Menu) processLines(data []string)  {
 	var line string
 
 	// Menu is missing
@@ -142,6 +148,7 @@ func mustSplit(start int, data []string) bool {
 	return false
 }
 
+// containsPrice checks the line if it contains a czech currency kc
 func containsPrice(line string) bool {
 	return strings.Contains(strings.ToLower(line), "kč")
 }

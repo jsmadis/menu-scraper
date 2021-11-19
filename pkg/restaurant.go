@@ -40,6 +40,7 @@ type ScrapedRestaurants struct {
 	Restaurants []ScrapedRestaurant
 }
 
+// Load loads restaurants configuration
 func (r *Restaurants) Load(path string) error {
 	absPath, err := filepath.Abs(path)
 	if err != nil {
@@ -59,6 +60,7 @@ func (r *Restaurants) Load(path string) error {
 	return nil
 }
 
+// Scrape scrapes menus and saves them to the ScrapeRestaurants struct
 func (r *Restaurants) Scrape() ScrapedRestaurants {
 	var resultsChan = make(chan ScrapedRestaurant, len(r.Restaurants))
 	var resultArray = make([]ScrapedRestaurant, len(r.Restaurants))
@@ -77,6 +79,7 @@ func (r *Restaurants) Scrape() ScrapedRestaurants {
 	return ScrapedRestaurants{Restaurants: resultArray}
 }
 
+// Print prints scrapedRestaurants in pretty format
 func (sr *ScrapedRestaurants) Print() error {
 	restaurantTemplate, err := template.New("ScrapedRestaurants").Parse(printingTemplate)
 

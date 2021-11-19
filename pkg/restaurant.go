@@ -10,8 +10,8 @@ import (
 )
 
 const (
-	dateRegex    = `\d{2}\.\d{2}\.\d{4}`
-	bigLineLimit = 25
+	dateRegex        = `\d{2}\.\d{2}\.\d{4}`
+	bigLineLimit     = 25
 	printingTemplate = `
 
 {{ range .Restaurants }}
@@ -25,7 +25,8 @@ const (
 {{ end }}
 	================================================================================================================
 {{ end }}
-`)
+`
+)
 
 type Restaurants struct {
 	Restaurants []*RestaurantConfig `yaml:"restaurants"`

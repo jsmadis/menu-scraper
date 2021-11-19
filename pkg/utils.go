@@ -7,7 +7,6 @@ import (
 	"io"
 )
 
-
 // source: https://github.com/PuerkitoBio/goquery/wiki/Tips-and-tricks#handle-non-utf8-html-pages
 func detectContentCharset(body io.Reader) string {
 	r := bufio.NewReader(body)

@@ -99,7 +99,7 @@ func (m *Menu) parseDate(rawData []string) []string {
 	dateRe := regexp.MustCompile(dateRegex)
 
 	// day and date are in the same string
-	if dateRe.MatchString(rawData[0]){
+	if dateRe.MatchString(rawData[0]) {
 		m.Date = dateRe.FindString(rawData[0])
 		m.Day = strings.Split(rawData[0], " ")[0]
 		return rawData[1:]
@@ -113,7 +113,7 @@ func (m *Menu) parseDate(rawData []string) []string {
 }
 
 // processLines processes lines to better format so each meal is for 1 line
-func (m *Menu) processLines(data []string)  {
+func (m *Menu) processLines(data []string) {
 	var line string
 
 	// Menu is missing
@@ -137,7 +137,7 @@ func mustSplit(start int, data []string) bool {
 	for i := start; i < len(data); i++ {
 		line := data[i]
 
-		if containsPrice(line){
+		if containsPrice(line) {
 			return false
 		}
 

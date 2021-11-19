@@ -7,7 +7,7 @@ import (
 	"sort"
 )
 
-const(
+const (
 	DefaultRestaurantsPath = "config/restaurants.yml"
 )
 
@@ -15,7 +15,7 @@ func main() {
 	var restaurantPath string
 	var today bool
 
-	flag.BoolVar(&today,"today", false,  "Prints only today's menus.")
+	flag.BoolVar(&today, "today", false, "Prints only today's menus.")
 	flag.StringVar(&restaurantPath, "restaurantPath", DefaultRestaurantsPath, "Path that contains a file with configuration of restaurants.")
 	flag.Parse()
 

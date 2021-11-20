@@ -81,7 +81,7 @@ func (r *Restaurants) Scrape() ScrapedRestaurants {
 		resultArray[i] = <-resultsChan
 
 		if resultArray[i].Err != nil {
-			log.Print(resultArray[i].Err)
+			log.Printf("Error during parsing %s, error: %s ", resultArray[i].RestaurantName ,resultArray[i].Err)
 		}
 	}
 	return ScrapedRestaurants{Restaurants: resultArray}

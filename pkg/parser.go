@@ -25,6 +25,7 @@ type Menu struct {
 // parse loads, parses and processes restaurants data about their daily menus
 func (rc *RestaurantConfig) parse(resultChan chan<- *ScrapedRestaurant) {
 	var lunchData = &ScrapedRestaurant{}
+	lunchData.RestaurantName = rc.Name
 
 	response, err := http.Get(rc.Url)
 	if err != nil {
@@ -61,7 +62,6 @@ func (rc *RestaurantConfig) parse(resultChan chan<- *ScrapedRestaurant) {
 		lunchData.Raw = append(lunchData.Raw, findText(node.FirstChild, nil))
 	}
 
-	lunchData.RestaurantName = rc.Name
 	lunchData.process()
 
 	resultChan <- lunchData

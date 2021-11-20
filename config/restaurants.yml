@@ -2,11 +2,14 @@ restaurants:
 - name: Pivnice u capa
   url: https://www.pivnice-ucapa.cz/denni-menu.php
   selector: "body > main > div.container.main-obsah > div > div > div > div > div > div.listek > div"
+  tags: ["HW"]
 
 - name: Suzies steak pub
   url: http://www.suzies.cz/poledni-menu.html
   selector: "#food-grid > div:nth-child(2) > div > div[class^=uk]"
+  tags: ["HW"]
 
 - name: Veroni cafe
   url: https://www.menicka.cz/4921-veroni-coffee--chocolate.html
   selector: "#menicka > div > div.text > div.profile > div.obsah > div.menicka"
+  tags: ["HW"]

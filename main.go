@@ -14,9 +14,11 @@ const (
 func main() {
 	var restaurantPath string
 	var today bool
+	var preFetchFilter = &PreFetchFilter{}
 
 	flag.BoolVar(&today, "today", false, "Prints only today's menus.")
 	flag.StringVar(&restaurantPath, "restaurantPath", DefaultRestaurantsPath, "Path that contains a file with configuration of restaurants.")
+	flag.Var(&preFetchFilter.Tags, "tags", "Tags to filter restaurants")
 	flag.Parse()
 
 	var restaurants Restaurants
@@ -27,6 +29,7 @@ func main() {
 		return
 	}
 
+	restaurants.Filter(preFetchFilter)
 	scrapedRestaurants := restaurants.Scrape()
 
 	if today {

@@ -33,9 +33,10 @@ type Restaurants struct {
 }
 
 type RestaurantConfig struct {
-	Name     string `yaml:"name"`
-	Url      string `yaml:"url"`
-	Selector string `yaml:"selector"`
+	Name     string   `yaml:"name"`
+	Url      string   `yaml:"url"`
+	Selector string   `yaml:"selector"`
+	Tags     []string `yaml:"tags"`
 }
 
 type ScrapedRestaurants struct {
@@ -60,6 +61,11 @@ func (r *Restaurants) Load(path string) error {
 	}
 
 	return nil
+}
+
+// Filter filters restaurants to fetch fewer resources
+func (r *Restaurants) Filter(filter *PreFetchFilter) {
+	filter.Filter(r)
 }
 
 // Scrape scrapes menus and saves them to the ScrapeRestaurants struct

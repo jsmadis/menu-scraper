@@ -65,7 +65,7 @@ func (r *Restaurants) Load(path string) error {
 
 // Filter filters restaurants to fetch fewer resources
 func (r *Restaurants) Filter(filter *PreFetchFilter) {
-	filter.Filter(r)
+	r.Restaurants = filter.Filter(r.Restaurants)
 }
 
 // Scrape scrapes menus and saves them to the ScrapeRestaurants struct

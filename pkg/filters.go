@@ -6,8 +6,26 @@ type PreFetchFilter struct {
 
 type Tags []string
 
-func (p *PreFetchFilter) Filter(restaurants *Restaurants) {
-	p.Tags.filter(restaurants)
+func (p *PreFetchFilter) Filter(restaurantConfigs []*RestaurantConfig) []*RestaurantConfig {
+	var filteredRestaurants []*RestaurantConfig
+	for _, restaurantConfig := range restaurantConfigs {
+		if p.filterRestaurantConfig(restaurantConfig) {
+			filteredRestaurants = append(filteredRestaurants, restaurantConfig)
+		}
+	}
+	return filteredRestaurants
+}
+
+func (p * PreFetchFilter) filterRestaurantConfig(config *RestaurantConfig) bool {
+	filterFunctions := []func(*RestaurantConfig) bool {
+		p.Tags.contains,
+	}
+
+	filtered := true
+	for _, filterFunc := range filterFunctions {
+		filtered = filtered && filterFunc(config)
+	}
+	return filtered
 }
 
 func (t *Tags) String() string {
@@ -22,23 +40,13 @@ func (t *Tags) Set(value string) error {
 	return nil
 }
 
-func (t *Tags) filter(restaurants *Restaurants) {
+func (t *Tags) contains(config *RestaurantConfig) bool {
+	// don't filter out if filter is not used
 	if len(*t) == 0 {
-		return
+		return true
 	}
-
-	var filteredRestaurants []*RestaurantConfig
-	for _, restaurant := range restaurants.Restaurants {
-		if t.contains(restaurant.Tags) {
-			filteredRestaurants = append(filteredRestaurants, restaurant)
-		}
-	}
-	restaurants.Restaurants = filteredRestaurants
-}
-
-func (t *Tags) contains(restaurantTags []string) bool {
 	for _, tag := range *t {
-		for _, rTag := range restaurantTags {
+		for _, rTag := range config.Tags {
 			if tag == rTag {
 				return true
 			}

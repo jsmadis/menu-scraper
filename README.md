@@ -28,6 +28,16 @@ Basic commands to run the app are:
 ./menu-scraper --today
 ```
 
+- prints restaurant based on their `tag`
+```bash
+./menu-scraper --tag HW
+```
+
+- prints only specified restaurants
+```bash
+./menu-scraper --name Cap --name Suzies
+```
+
 ## Adding new restaurants
 
 In order to add new restaurant you need to create new entry inside `config/restaurants.yml` with name, url and css selector.

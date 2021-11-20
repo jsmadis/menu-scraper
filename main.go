@@ -18,7 +18,7 @@ func main() {
 
 	flag.BoolVar(&today, "today", false, "Prints only today's menus.")
 	flag.StringVar(&restaurantPath, "restaurantPath", DefaultRestaurantsPath, "Path that contains a file with configuration of restaurants.")
-	flag.Var(&preFetchFilter.Tags, "tags", "Tags to filter restaurants")
+	flag.Var(&preFetchFilter.Tags, "tag", "Tag to filter restaurants")
 	flag.Var(&preFetchFilter.RestaurantName, "name", "Name of the restaurant you want to fetch.")
 	flag.Parse()
 

@@ -2,8 +2,10 @@ package pkg
 
 type PreFetchFilter struct {
 	Tags Tags
+	RestaurantName RestaurantName
 }
 
+type RestaurantName []string
 type Tags []string
 
 func (p *PreFetchFilter) Filter(restaurantConfigs []*RestaurantConfig) []*RestaurantConfig {
@@ -19,6 +21,7 @@ func (p *PreFetchFilter) Filter(restaurantConfigs []*RestaurantConfig) []*Restau
 func (p * PreFetchFilter) filterRestaurantConfig(config *RestaurantConfig) bool {
 	filterFunctions := []func(*RestaurantConfig) bool {
 		p.Tags.contains,
+		p.RestaurantName.contains,
 	}
 
 	filtered := true
@@ -53,4 +56,31 @@ func (t *Tags) contains(config *RestaurantConfig) bool {
 		}
 	}
 	return false
+}
+
+func (rn *RestaurantName) String() string {
+	if *rn != nil {
+		return rn.String()
+	}
+	return ""
+}
+
+func (rn *RestaurantName) Set(value string) error {
+	*rn = append(*rn, value)
+	return nil
+}
+
+func (rn *RestaurantName) contains(config *RestaurantConfig) bool {
+	// don't filter out if filter is not used
+	if len(*rn) == 0 {
+		return true
+	}
+
+	for _, rName := range *rn {
+		if config.Name == rName {
+			return true
+		}
+	}
+	return false
+
 }

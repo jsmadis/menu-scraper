@@ -10,7 +10,6 @@ import (
 )
 
 const (
-	dateRegex        = `\d{2}\.\d{2}\.\d{4}`
 	bigLineLimit     = 25
 	printingTemplate = `
 
@@ -94,7 +93,7 @@ func (sr *ScrapedRestaurants) FilterTodayMenus() {
 	for _, restaurant := range sr.Restaurants {
 		var menuToday []*Menu
 		for _, menu := range restaurant.DailyMenus {
-			if menu.Date == dateToday {
+			if menu.Date.String() == dateToday {
 				menuToday = append(menuToday, menu)
 			}
 		}

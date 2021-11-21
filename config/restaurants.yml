@@ -13,3 +13,8 @@ restaurants:
   url: https://www.menicka.cz/4921-veroni-coffee--chocolate.html
   selector: "#menicka > div > div.text > div.profile > div.obsah > div.menicka"
   tags: ["HW"]
+
+- name: Bauman
+  url: https://ubaumannu.cz/menu
+  selector: "#block-yui_3_17_2_3_1488384401748_8513 > div > p"
+  tags: ["jsmadis"]

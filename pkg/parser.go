@@ -145,6 +145,10 @@ func (l *ScrapedRestaurant) splitRawData() {
 
 // parseDate parses date and day from the data
 func (m *Menu) parseDate(rawData []Line) []Line {
+	if len(rawData) < 2 {
+		return rawData
+	}
+
 	dateRe := regexp.MustCompile(dateRegex)
 	dayRe := regexp.MustCompile(dayRegex)
 
@@ -237,7 +241,7 @@ func (l *Line) ToLower() string {
 	return strings.ToLower(l.String())
 }
 
-func(l *Line) ReplaceAll(old, new string) string {
+func (l *Line) ReplaceAll(old, new string) string {
 	return strings.ReplaceAll(l.String(), old, new)
 }
 
